@@ -9,6 +9,9 @@ class Processo:
     self._advogado = advogado
     self._audiencias = audiencia
 
+  def __str__(self):
+    return f'Descrição: {self._descricao} Custo: {self._custo} Decisão: {self._decisao}' 
+
     # GETTER AND SETTERS
 
   def get_descricao(self):
@@ -56,11 +59,9 @@ class Processo:
   #OUTROS METODOS
 
   def audiencias_temp(self, tempo):
-    
-    for i in self._audiencias:
-      lista = []
+    lista = []
+    for i in range(len(self._audiencias)):
       if self._audiencias[i].get_duracao() >= tempo:
-        lista.append(self._audiencias[i])
+        lista.append([self._audiencias[i].get_data(), self._audiencias[i].get_recomendacao()])
 
-    return 'Data da audiencia: {} \nLista de Audiencia com tempo igual ou maior '.format(self.get_audiencias.get_data(), lista)
-
+    return f'Lista de Audiencia com tempo igual ou maior {lista} '

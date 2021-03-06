@@ -14,7 +14,6 @@ class Audiencia:
   def set_data(self, nova_data):
     self._data = nova_data
     
-    
   def get_recomendacao(self):
     return self._recomendacao
 

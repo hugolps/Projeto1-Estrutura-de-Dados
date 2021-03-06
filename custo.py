@@ -4,6 +4,9 @@ class Custo:
     self._data = data
     self._descricao = descricao
     self._valor = valor
+
+  def __str__(self):
+    return f''
   
   def get_data(self):
     return self._data
@@ -22,3 +25,4 @@ class Custo:
     
   def set_valor(self, nova_valor):
     self._valor = nova_valor
+  

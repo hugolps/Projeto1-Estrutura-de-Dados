@@ -7,7 +7,9 @@ class Advogado:
 
 
   # GETTER AND SETTERS
-    
+  def get_cod_oab(self):
+    return self._cod_oab
+
   def set_cod_oab(self, novo_cod_oab):
     self._cod_oab = novo_cod_oab
     
@@ -23,10 +25,12 @@ class Advogado:
   def set_processos(self, novo_processo):
     self._processos.append(novo_processo)
 
-
   # OUTROS METODOS
 
   def lista_clientes(self):
-    return
+    clientes = []
+    for i in range(len(self._processos)):
+      clientes.append(self._processos[i].get_pessoa().get_nome())
+    return f'Lista de Clientes: {clientes}'
 
     
