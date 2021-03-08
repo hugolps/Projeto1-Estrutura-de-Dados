@@ -7,6 +7,12 @@ class Pessoa:
 
     # GETTER AND SETTERS
 
+  def __str__(self):
+    processos = ''
+    for i in range(len(self._processos)):
+      processos += f'{self._processos[i]}\n'
+    return f'CPF: {self._cpf}\nNome: {self._nome}\n\nProcessos: \n{processos}'
+
   def get_cpf(self):
     return self._cpf
 
@@ -21,34 +27,47 @@ class Pessoa:
 
   def get_processos(self):
     return self._processos
-
+  
+  def lista_processos(self):
+    processos = ''
+    for i in range(len(self._processos)):
+      processos += f'{self._processos[i]}\n'
+    return processos
+    
   def set_processos(self, novo_processo):
-    self._processos.append(novo_processo)
+    self._processos = novo_processo
+
+  def add_processos(self, nova_processos):
+    self._processos.append(nova_processos)
 
   # OUTROS METODOS
-
+  #   
   def num_decisoes(self, dec):
     total = 0
-    for i in self._processos:
+    decisao = ''
+
+    if (dec == True):
+      decisao = 'Deferidos'
+    else:
+      decisao = 'Indeferidos'
+
+    for i in range(len(self._processos)):
       if self._processos[i].get_decisao() == dec:
         total += 1
-      
-    return 'O numero de processos {} e igual a {}'.format(dec, total)
+
+    return 'O número de processos {} é igual a {}'.format(decisao, total)
 
   def custo_total(self):
     total = 0
-    for i in self._processos:
-      total += self._processos[i].get_custo()
-    return total
+    for i in range(len(self._processos)):
+      total += self._processos[i].get_custo().get_valor()
+    return f'Custo Total: R$ {total}'
 
   def custo_total_adv(self, cod_oab):
     # processos > advogado > get_cod_oab comparar com o cod_oab, se for = adicionar na variavel
     total = 0
-
-    for i in self._processos:
+    for i in range(len(self._processos)):
       if self._processos[i].get_advogado().get_cod_oab() == cod_oab:
-        total += self._processos[i].get_custo()
+        total += self._processos[i].get_custo().get_valor()
 
-    return total
-
-  
+    return f'Custo Total do Advogado: R$ {total}'

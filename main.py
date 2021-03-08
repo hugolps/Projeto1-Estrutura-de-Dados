@@ -3,67 +3,151 @@ from processo import Processo
 from pessoa import Pessoa
 from audiencia import Audiencia
 from custo import Custo
+from feeders import *
+from menu import *
 
-# CUSTOS
-custo1 = Custo('01/01/2021', 'caro', 10000.00)
-custo2 = Custo('02/02/2022', 'barato', 500.00)
-custo3 = Custo('03/03/2023', 'medio', 5000.00)
-custo4 = Custo('04/04/2024', 'gratuito', 0.00)
-custo5 = Custo('05/05/2025', 'carissimo', 500000.00)
-custo6 = Custo('06/06/2026', 'gratuito', 0.00)
-custo7 = Custo('07/07/2027', 'carissimo', 1000000.00)
-custo8 = Custo('08/08/2028', 'barato', 800.00)
-custo9 = Custo('09/09/2029', 'gratuito', 0.00)
-custo10 = Custo('10/10/2030', 'caro', 15000.00)
+def menu_principal():
+  valorMenu = True
+  while valorMenu == True:
+      print('--------------------- SysJurídico v12.00 -----------------------------')
+      print('----------------------------- MENU -----------------------------------\n')
+      print('1 - Tempo das Audiências')
+      print('2 - Listar as decisões de um processo de uma pessoa')
+      print('3 - Listar os custos processuais de uma pessoa')
+      print('4 - Listar os custos processuais de uma pessoa por advogado')
+      print('5 - Listar os clientes de um advogado')
+      print('6 - Inseri Audiência em um Processo')
+      print('9 - Informações')
+      print('0 - Sair do Sistema')
+      print('----------------------------------------------------------------------\n')
+      valorMenu = int(input('Informe o número corresponde ao que deseja realizar: '))
+      if valorMenu == 1:
+          tempo = int(input('Informe o tempo da audiência em minutos: '))
+          for i in range (len(lista_processos)):
+              print(f'Processo {i+1}: {lista_processos[i].audiencias_temp(tempo)}')
+          valorMenu = int(input('Deseja voltar ao menu? Digite 1 para voltar ao Menu e 0 para encerrar: '))
 
-#Pessoa
-Jair = Pessoa('666.666.666-17', 'Jair Bolsonaro')
-Ciro = Pessoa('202.020.202-12', 'Ciro Gomes')
-Fernando = Pessoa('030.030.030-13','Fernando Haddad')
-Marina = Pessoa('420.420.420-18', 'Marina Silva')
-Joao = Pessoa('171.171.171-30', 'Joao Amoedo')
-Geraldo = Pessoa('123.456.789-45', 'Geraldo Alckmin')
-Benevenuto = Pessoa('777.777.777-51', 'Benevenuto Daciolo')
+      elif valorMenu == 2 :
+            consulta_decisao()
+            valorMenu = int(input('Deseja voltar ao menu? Digite 1 para voltar ao Menu e 0 para encerrar: '))
 
-# ADVOGADOS
-Gilmar = Advogado('OAB-MA 111.111', 'Gilmar Mendes')
-Carmem = Advogado('OAB-DF 222.222', 'Carmem Lucia')
-Roberto = Advogado('OAB-RJ 333.333', 'Roberto Lewandowski')
-Rosa = Advogado('OAB-SP 444.444', 'Rosa Weber')
+      elif valorMenu == 3 :
+          cpf = input('Informe o CPF da Pessoa (Ex: 123.456.789-45): ')
+          pessoa = encontra_pessoa(cpf)
+          print(pessoa.custo_total())
 
-# AUDIENCIAS
-audiencia1 = Audiencia('01/01/2021', 'Acordo', 60)
-audiencia2 = Audiencia('02/02/2022', 'Litigio', 90)
-audiencia3 = Audiencia('03/03/2023', 'Acordo', 30)
-audiencia4 = Audiencia('04/04/2024', 'Litigio', 120)
-audiencia5 = Audiencia('05/05/2025', 'Acordo', 90)
-audiencia6 = Audiencia('06/06/2026', 'Litigio',120)
-audiencia7 = Audiencia('07/07/2027', 'Acordo', 60)
-audiencia8 = Audiencia('08/08/2028', 'Litigio', 30)
-audiencia9 = Audiencia('09/09/2029', 'Acordo', 90)
-audiencia10 = Audiencia('10/10/2030', 'Litigio', 60)
+      elif valorMenu == 4 :
+          cod_adv = input('Informe o código do advogado (Ex: OAB-DF 222.222): ')
+          cpf = input('Informe o CPF da Pessoa (Ex: 123.456.789-45): ')
+          pessoa = encontra_pessoa(cpf)
+          print(pessoa.custo_total_adv(cod_adv))
 
+      elif valorMenu == 5 :
+          cod_adv = input('Informe o código do advogado (Ex: OAB-DF 222.222): ')
+          adv = encontra_adv(cod_adv)
+          print(adv.lista_clientes()) 
 
-#PROCESSOS
-processo1 = Processo('Dano Morais', custo3, False, 'Transitado em julgado', Ciro, Carmem)
-processo2 = Processo('Divorcio Litigioso', custo5, True, 'Recurso', Jair, Gilmar)
-processo3 = Processo('Indenizacao por Danos Materiais', custo2, True, 'Em execucao',Marina , Rosa)
-processo4 = Processo('Execucao Contratual', custo9, False, 'Arquivado', Geraldo, Gilmar)
-processo5 = Processo('Habeas Corpus', custo4, False, 'Negado', Jair, Gilmar)
-processo6 = Processo('Habeas Data', custo6, True, 'Transitado em Julgado', Benevenuto, Rosa)
-processo7 = Processo('Pedido de Liminar', custo8, False, 'Arquivado', Fernando, Carmem)
-processo8 = Processo('Homicidio Duplamente Qualificado', custo7, True, 'Diligencia', Jair, Gilmar)
-processo9 = Processo('Recurso Extraordinario', custo10, False, 'Embargos Declaratorios', Joao, Roberto)
-processo10 = Processo('Dano Morais', custo3, True, 'Transitado em julgado', Ciro, Carmem)
+      elif valorMenu == 6 :   
+        cria_audiencia()
+      
+      elif valorMenu == 7 :   
+        compara_custo_adv()
 
+      elif valorMenu == 9 :
+        menu_informacoes()
 
+      elif valorMenu == 9999:
+          imp_teste()
+          valorMenu = int(input('Deseja voltar ao menu? Digite 1 para voltar ao Menu e 0 para encerrar: '))
+
+      elif valorMenu == 0 :
+          print('\n\nFinalizando o sistema! Até mais')
+          print('SysJurídico v12.00\n\n')
+          valorMenu = False
+      else:
+          print('Erro! O valor informado é inválido !!! Tente outra vez\n')
 
 
-Ciro.set_processos(processo1)
-Carmem.set_processos(processo1)
-processo1.set_audiencia(audiencia1)
+def menu_informacoes():
+  menuOpcoes = 1
+  while menuOpcoes == 1:
+    print('----------------------------- OPÇÕES -----------------------------------\n')
+    print('1 - Processos')
+    print('2 - Pessoas')
+    print('3 - Advogados')
+    print('4 - Audiencias')
+    print('5 - Custos')
+    print('0 - Sair do Sistema')
+    print('----------------------------------------------------------------------\n')
+
+    valorOpcao = int(input('Escolha a categoria das informações que deseja visualizar: '))
+    if valorOpcao == 1:
+      print('Processos Disponíveis:')
+      for i in range(len(lista_processos)):
+        print(lista_processos[i].get_cod_proc())
+      
+      numProc = int(input('\nInforme o código do processo desejado: '))
+      print(f'{encontra_proc(numProc)}\n')
+
+    elif valorOpcao == 2:
+      print('Pessoas Disponíveis:')
+      for i in range(len(lista_pessoas)):
+        print(lista_pessoas[i].get_nome(), lista_pessoas[i].get_cpf())
+      
+      cpfPessoa = input('\nInforme o CPF da pessoa desejada: ')
+      pessoa = encontra_pessoa(cpfPessoa)
+      print('\n----------------------------------------------------------------------\n\n')
+      print(pessoa)
+
+    elif valorOpcao == 3:
+      print('Advogados Disponíveis:')
+      for i in range(len(lista_adv)):
+        print(lista_adv[i].get_nome(), lista_adv[i].get_cod_oab())
+      
+      oabAdv = input('\nInforme o número da OAB do(a) advogado(a) desejado(a): ')
+      adv = encontra_adv(oabAdv)
+      print('\n----------------------------------------------------------------------\n\n')
+      print(f'{adv}\n')
+    
+    elif valorOpcao == 4:
+      print('Audiências Disponíveis:')
+      for i in range(len(lista_audiencias)):
+        print(lista_audiencias[i].get_cod_aud())
+      
+      codAud = int(input('\nInforme o código da Audiência desejada: '))
+      aud = encontra_aud(codAud)
+      print('\n----------------------------------------------------------------------\n\n')
+      print(f'{aud}\n')
+
+    elif valorOpcao == 5:
+      print('Custos Disponíveis:')
+      for i in range(len(lista_custos)):
+        print(lista_custos[i].get_cod_custo())
+      
+      codCusto = int(input('\nInforme o código do Custo desejado: '))
+      custo = encontra_custo(codCusto)
+      print('\n----------------------------------------------------------------------\n\n')
+      print(f'{custo}\n')
+    
+    elif valorOpcao == 0:
+      menu_principal()
 
 
-print(Ciro.custo_total())
-print(Ciro.custo_total_adv('OAB-DF 222.222'))
-print(Ciro.num_decisoes(True))
+
+
+
+menu_principal()
+# print(lista_processos[4].audiencias_temp(0))
+# print(processo1)
+# print(20 * '-')
+# print(processo11)
+# processo11.set_audiencia(audiencia2)
+# print(processo11)
+# print(processo9)
+# print(encontra_pessoa('000.000.000-00'))
+# print(encontra_pessoa('123.456.789-45'))
+# print(cria_audiencia())
+# print(lista_processos[0].get_cod_proc())
+# print(encontra_aud(5))
+
+

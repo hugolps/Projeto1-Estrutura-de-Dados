@@ -1,15 +1,30 @@
 class Processo:
   
-  def __init__(self, descricao, custo, decisao, status, pessoa, advogado, audiencia = []):
+  def __init__(self, descricao, custo, decisao, status, pessoa, advogado, cod_proc, audiencia = []):
     self._descricao = descricao
     self._custo = custo
     self._decisao = decisao
     self._status = status
     self._pessoa = pessoa
     self._advogado = advogado
+    self._cod_proc = cod_proc
     self._audiencias = audiencia
 
+
+
+  def __str__(self):
+    aud = ''
+    for i in range(len(self._audiencias)):
+      aud += f'  {self._audiencias[i]}\n'
+    return f'Código do Processo: {self._cod_proc}\nDescrição: {self._descricao}\nCusto: R$ {self._custo.get_valor()}\nDecisão: {self._decisao}\nStatus: {self._status}\nPessoa: {self._pessoa.get_nome()}\n CPF: {self._pessoa.get_cpf()}\nAdvogado: {self._advogado.get_nome()}\n {self._advogado.get_cod_oab()}\nAudiencia: \n{aud}' 
+
     # GETTER AND SETTERS
+
+  def get_cod_proc(self):
+    return self._cod_proc
+  
+  def set_cod_proc(self, novo_cod_proc):
+    self._cod_proc = novo_cod_proc
 
   def get_descricao(self):
     return self._descricao
@@ -51,16 +66,27 @@ class Processo:
     return self._audiencias
 
   def set_audiencia(self, nova_audiencia):
+    self._audiencias = nova_audiencia
+
+  def add_audiencia(self, nova_audiencia):
     self._audiencias.append(nova_audiencia)
+
+
+  # def add_audiencia(self, audiencia):
 
   #OUTROS METODOS
 
   def audiencias_temp(self, tempo):
-    
-    for i in self._audiencias:
-      lista = []
+    lista = []
+    for i in range(len(self._audiencias)):
       if self._audiencias[i].get_duracao() >= tempo:
-        lista.append(self._audiencias[i])
+        lista.append([self._audiencias[i].get_data(), self._audiencias[i].get_recomendacao()])
+    
+    # if len(lista) != 0:
+    return f'Lista de Audiências com tempo igual ou maior: {lista} '
 
-    return 'Data da audiencia: {} \nLista de Audiencia com tempo igual ou maior '.format(self.get_audiencias.get_data(), lista)
-
+  def lista_audiencias(self):
+    aud = ''
+    for i in range(len(self._audiencias)):
+      aud += f'  {self._audiencias[i]}\n'
+    return aud
