@@ -7,6 +7,13 @@ class Advogado:
 
 
   # GETTER AND SETTERS
+
+  def __str__(self):
+    processos = ''
+    for i in range(len(self._processos)):
+      processos += f'{self._processos[i]}\n'
+    return f'Inscrição OAB: {self._cod_oab}\nNome: {self._nome}\n\nProcessos: \n{processos}'
+
   def get_cod_oab(self):
     return self._cod_oab
 
@@ -21,9 +28,18 @@ class Advogado:
 
   def get_processos(self):
     return self._processos
+
+  def lista_processos(self):
+    processos = ''
+    for i in range(len(self._processos)):
+      processos += f'{self._processos[i]}\n'
+    return processos
     
   def set_processos(self, novo_processo):
-    self._processos.append(novo_processo)
+    self._processos = novo_processo
+
+  def add_processos(self, nova_processos):
+    self._processos.append(nova_processos)
 
   # OUTROS METODOS
 
@@ -32,5 +48,11 @@ class Advogado:
     for i in range(len(self._processos)):
       clientes.append(self._processos[i].get_pessoa().get_nome())
     return f'Lista de Clientes: {clientes}'
+
+  def custo_total(self):
+    total = 0
+    for i in range(len(self._processos)):
+      total += self._processos[i].get_custo().get_valor()
+    return f'Custo Total: R$ {total}'
 
     
